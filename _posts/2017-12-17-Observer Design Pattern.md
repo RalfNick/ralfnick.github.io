@@ -24,7 +24,7 @@ tag: Java
 仿照源码中的模式，也设计Observer接口和Subject接口，然后由具体的类去实现。
 下面看一下类图关系
 
-
+![UML图](http://p0c1ordis.bkt.clouddn.com/ClassDiagram.jpg)
 
 Observer接口，只有一个天气更新的接口函数
 
