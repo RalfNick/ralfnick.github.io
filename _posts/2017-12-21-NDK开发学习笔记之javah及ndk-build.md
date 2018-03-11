@@ -7,7 +7,7 @@ tag: Android
 ---
 
 
-[上一篇](https://ralfnick.github.io/2017/11/NDK%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BJNI%E7%8E%AF%E5%A2%83%E5%88%9B%E5%BB%BA/)写到 NDK 的基本使用及环境搭建。
+[**上一篇**](https://ralfnick.github.io/2017/11/NDK%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BJNI%E7%8E%AF%E5%A2%83%E5%88%9B%E5%BB%BA/)  写到 NDK 的基本使用及环境搭建。
 并写了一个简单的 cpp 文件，但是有没有发现在编写 cpp 文件中的函数时，名字是不是很长，很容易写错！
 那么，哟没有方法，自动生成函数名呢？没错，你猜对了，还真有这样的工具—— javah。下面就来介绍 javah 的使用以及以下小技巧，
 此外还有 ndk-build 生成 so 的方法。
