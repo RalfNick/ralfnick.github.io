@@ -68,4 +68,7 @@ paginate: 20
 paginate_path: "page/:num/"
 exclude: [vendor]
 
+# busuanzi
+busuanzi: true
+busuanzi_site_offset: 100000
 
