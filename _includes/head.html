@@ -31,19 +31,6 @@
   async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>  
 
-<!-- 百度统计 -->
-  {% if site.baidu.id %}
-  <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?{{site.baidu.id}}";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-  </script>
-  {% endif %}
-
 <!-- google 统计 -->
   {% if site.ga.id %}
   <script>
@@ -55,5 +42,15 @@
       ga('send', 'pageview');
   </script>
   {% endif %}
+  <!-- 百度统计 -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf59123315ae64f7b27cd50ab7d648bb";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 </head>
