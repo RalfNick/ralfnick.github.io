@@ -6,13 +6,13 @@ description: "初学NDK开发，记录知识要点和主要操作，防止重复
 tag: Android
 ---
 
-
-[**上一篇**](https://ralfnick.github.io/2017/11/NDK%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BJNI%E7%8E%AF%E5%A2%83%E5%88%9B%E5%BB%BA/)  写到 NDK 的基本使用及环境搭建。
+[**NDK开发学习笔记之JNI环境搭建**](https://ralfnick.github.io/2017/11/NDK%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BJNI%E7%8E%AF%E5%A2%83%E5%88%9B%E5%BB%BA/)  写到 NDK 的基本使用及环境搭建。
 并写了一个简单的 cpp 文件，但是有没有发现在编写 cpp 文件中的函数时，名字是不是很长，很容易写错！
 那么，哟没有方法，自动生成函数名呢？没错，你猜对了，还真有这样的工具—— javah。下面就来介绍 javah 的使用以及以下小技巧，
 此外还有 ndk-build 生成 so 的方法。
 
 ### 概要
+
 > * **javah 的使用**
 > * **ndk-build 的使用**
 
@@ -32,18 +32,18 @@ tag: Android
 extern "C" {
 
 /*
- * Class:     com_ralf_www_jnitest_JniUtils
- * Method:    getString
- * Signature: ()Ljava/lang/String;
- */
+* Class:     com_ralf_www_jnitest_JniUtils
+* Method:    getString
+* Signature: ()Ljava/lang/String;
+*/
 JNIEXPORT jstring JNICALL Java_com_ralf_www_jnitest_JniUtils_getString
-   (JNIEnv *env, jclass jc){
+(JNIEnv *env, jclass jc){
 
-     const char* ch = "String From JNI";
-     return env->NewStringUTF(ch);
-   }
+const char* ch = "String From JNI";
+return env->NewStringUTF(ch);
+}
 
- }
+}
 ```
 但是这么长的名字很容易写错，特别在包名中出现一些特殊符号时，如，下划线（com.example.my_jni）,这时候可以使用 javah 来
 自动生成头文件，里面会有完整的函数名。下面就来看一下实现的步骤。
@@ -76,7 +76,7 @@ javah -classpath ./java -d ../jni com.ralf.www.jnitest.JniUtils
 >
 >* com.ralf.www.jnitest.JniUtils，表示需要编译的类文件，也就是包名+类名（也就是包含 native 方法的类文件）
 
- ![GBK编译](http://p0c1ordis.bkt.clouddn.com/javah.PNG)
+![GBK编译](https://github.com/RalfNick/PicRepository/raw/master/jni/javah.PNG)
 
 忽略提示错误，**“错误，编码 GBK 的不可映射字符”**，此时，对应的头文件已经生成。可以打开看到里面的内容，如下。
 
@@ -92,12 +92,12 @@ javah -classpath ./java -d ../jni com.ralf.www.jnitest.JniUtils
 extern "C" {
 #endif
 /*
- * Class:     com_ralf_www_jnitest_JniUtils
- * Method:    getString
- * Signature: ()Ljava/lang/String;
- */
+* Class:     com_ralf_www_jnitest_JniUtils
+* Method:    getString
+* Signature: ()Ljava/lang/String;
+*/
 JNIEXPORT jstring JNICALL Java_com_ralf_www_jnitest_JniUtils_getString
-  (JNIEnv *, jclass);
+(JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }
@@ -140,11 +140,11 @@ So 库放置的位置是在 main 文件夹下的 libs 文件夹，里面有不�
 生成不同版本的 so 的设置在 Application.mk 文件中设置，本例中设置 APP_ABI :=all
 
 
-![lib路径](http://p0c1ordis.bkt.clouddn.com/libs.PNG)
+![lib路径](https://github.com/RalfNick/PicRepository/raw/master/jni/libs.PNG)
 
 （2）利用 gradle 配置
 
-a.	指定 NDK 路径
+a.    指定 NDK 路径
 
 
 在 local.properties 文件下设置
@@ -154,23 +154,23 @@ ndk.dir=D\:\\Android\\android-ndk-r10e
 sdk.dir=D\:\\Android\\sdk
 ```
 
-b.	指定编译的 Android.mk 文件
+b.    指定编译的 Android.mk 文件
 
 ```cpp
 android {
 …
-  externalNativeBuild{
+externalNativeBuild{
 
 
-      //指定 Android.mk 文件
-      ndkBuild{
-          path 'src/main/jni/Android.mk'
-      }
-  }
+//指定 Android.mk 文件
+ndkBuild{
+path 'src/main/jni/Android.mk'
+}
+}
 }
 ```
 
-c.	指定property.gradle文件设置
+c.    指定property.gradle文件设置
 ```cpp
 android.useDeprecatedNdk=true
 ```
@@ -179,7 +179,7 @@ android.useDeprecatedNdk=true
 
 生成的 so 库所在路径,稍微有点隐蔽，看下图
 
-![so路径](http://p0c1ordis.bkt.clouddn.com/gradle%E7%94%9F%E6%88%90%E7%9A%84%E8%B7%AF%E5%BE%84.PNG)
+![so路径](https://github.com/RalfNick/PicRepository/raw/master/jni/gradle%E7%94%9F%E6%88%90%E7%9A%84%E8%B7%AF%E5%BE%84.PNG)
 
 （3）利用 gradle 配置还有一个快捷方式，一键完成。
 在 jni 文件夹上右键选择 “Link C++ Project with Gradle” 一项，然后选择你工程中 android.mk 文件，这样就完成了配置。
@@ -193,12 +193,12 @@ android.useDeprecatedNdk=true
 
 利用 javah 命令生成头文件的命令可以在 terminal 窗口输入
 
-![javah快捷工具](http://p0c1ordis.bkt.clouddn.com/terminal%E7%AA%97%E5%8F%A3-javah.PNG)
+![javah快捷工具](https://github.com/RalfNick/PicRepository/raw/master/jni/terminal%E7%AA%97%E5%8F%A3-javah.PNG)
 
 
 同样，ndk-build 命令也可以在 terminal 窗口执行
 
-![ndk-build快捷工具](http://p0c1ordis.bkt.clouddn.com/terminal%E7%AA%97%E5%8F%A3-ndk-build.PNG)
+![ndk-build快捷工具](https://github.com/RalfNick/PicRepository/raw/master/jni/terminal%E7%AA%97%E5%8F%A3-ndk-build.PNG)
 
 （2）将命令设置成快捷工具
 
@@ -207,7 +207,7 @@ android.useDeprecatedNdk=true
 
 >* javah 快捷工具
 >
-![external工具](http://p0c1ordis.bkt.clouddn.com/external%E5%B7%A5%E5%85%B7%E6%B7%BB%E5%8A%A0.PNG)
+![external工具](https://github.com/RalfNick/PicRepository/raw/master/jni/external%E5%B7%A5%E5%85%B7%E6%B7%BB%E5%8A%A0.PNG)
 
 
 **参数设置：**
@@ -224,7 +224,7 @@ android.useDeprecatedNdk=true
 
 >* ndk-build 命令快捷方式
 >
-![ndk编译工具](http://p0c1ordis.bkt.clouddn.com/ndk%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7.PNG)
+![ndk编译工具](https://github.com/RalfNick/PicRepository/raw/master/jni/ndk%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7.PNG)
 
 
 **设置参数：**

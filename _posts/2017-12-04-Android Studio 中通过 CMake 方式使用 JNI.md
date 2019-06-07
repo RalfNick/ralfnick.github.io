@@ -29,21 +29,21 @@ Android Studio 充分支持编辑 C/C++ 项目文件，可以在应用中快速�
 
 #### 1.创建工程，选择 “ Include C++ support ”
 
-[图片上传失败...(image-a0ba69-1512391552569)]
+![cmake1](https://github.com/RalfNick/PicRepository/raw/master/jni/jni%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%E5%9B%BE%E7%89%872.PNG)
 
 
 #### 2.选择 Toolchain Default，下面两个选项也勾选上
 
-![图一](http://upload-images.jianshu.io/upload_images/4744186-bd4fcf621635dec1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![图一](https://github.com/RalfNick/PicRepository/raw/master/jni/1.png)
 
 
 #### 3.目录结构（我们需要配置的文件）：
 
 >* （1）CmakLists.txt
-
+>
 >* （2）app下的build.gradle文件
 
-[图片上传失败...(image-1f8f48-1512391552570)]
+![cmake](https://github.com/RalfNick/PicRepository/raw/master/jni/jni%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%E5%9B%BE%E7%89%873.PNG)
 
 #### 4. build.gradle
 
@@ -51,54 +51,54 @@ Android Studio 充分支持编辑 C/C++ 项目文件，可以在应用中快速�
 defaultConfig｛｝后面添加：
 
 ```cpp
-  externalNativeBuild {
-      cmake {
-          cppFlags "-std=c++11"
-      }
-  }
-  ```
+externalNativeBuild {
+cmake {
+cppFlags "-std=c++11"
+}
+}
+```
 或者：
 
 ```cpp
-  externalNativeBuild {
-      cmake {
-          cppFlags ""
-      }
-  }
-  ```
+externalNativeBuild {
+cmake {
+cppFlags ""
+}
+}
+```
 CMake 在编译 C/C++ 代码的时候，回根据上面的两种不同设置来使用C++的两种不同标准，C++11 或者默认标准
 android {}后面添加：
 
-  ```cpp
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+```cpp
+externalNativeBuild {
+cmake {
+path "CMakeLists.txt"
+}
+}
 ```
 指定 CMake的具体路径为当前项目的根路径,名字为 CMakeLists.txt。
 除此之外，还可以增加其他配置属性，这里仅给出两个栗子。
 
-（1）	制定ABI
+（1）制定ABI
 
 ```cpp
-  ndk{
-      moduleName "jnitest"//指定生成so库的名字，注意：也可以在CMakeLists中指定
-      ldLibs "log", "z", "m"//添加依赖的Log库
-      abiFilters "armeabi", "armeabi-v7a", "x86"指定特定的ABI架构
-  }
+ndk{
+moduleName "jnitest"//指定生成so库的名字，注意：也可以在CMakeLists中指定
+ldLibs "log", "z", "m"//添加依赖的Log库
+abiFilters "armeabi", "armeabi-v7a", "x86"指定特定的ABI架构
+}
 
 ```
 （2）指定生成so库的位置
 
 ```cpp
 //生成so到指定路径下
-  sourceSets{
-      main{
-          jni.srcDirs = []
-          jniLibs.srcDirs = ['libs']
-      }
-  }
+sourceSets{
+main{
+jni.srcDirs = []
+jniLibs.srcDirs = ['libs']
+}
+}
 ```
 
 
@@ -126,16 +126,16 @@ set(CPP_DIR src/main/cpp)
 
 
 add_library( # Sets the name of the library.
-             #设置library的名字，也是加载时的库的名字，生成的so是libnative-lib.so
-             native-lib
+#设置library的名字，也是加载时的库的名字，生成的so是libnative-lib.so
+native-lib
 
-             # Sets the library as a shared library.
-             #设置library是一个共享库
-             SHARED
+# Sets the library as a shared library.
+#设置library是一个共享库
+SHARED
 
-             # Provides a relative path to your source file(s).
-             #指定需要编译的源代码的相对路径
-            ${CPP_DIR}/native-lib.cpp )
+# Provides a relative path to your source file(s).
+#指定需要编译的源代码的相对路径
+${CPP_DIR}/native-lib.cpp )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -147,13 +147,13 @@ add_library( # Sets the name of the library.
 #CMake在编译时会确认该库文件是否存在。
 
 find_library( # Sets the name of the path variable.
-              #指定库文件路径的变量
-              log-lib
+#指定库文件路径的变量
+log-lib
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              #指定CMake需要加载的NDK库文件名字
-              log )
+# Specifies the name of the NDK library that
+# you want CMake to locate.
+#指定CMake需要加载的NDK库文件名字
+log )
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
@@ -162,149 +162,150 @@ find_library( # Sets the name of the path variable.
 #你可以链接多个库文件，如在这个脚本中自己定义的库，预编译的三方库，或者是系统的库文件
 
 target_link_libraries( # Specifies the target library.
-                       #指定链接到的目标库文件
-                       native-lib
+#指定链接到的目标库文件
+native-lib
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       #链接目标库文件到包含在NDK中的Log库上
-                       ${log-lib} )
+# Links the target library to the log library
+# included in the NDK.
+#链接目标库文件到包含在NDK中的Log库上
+${log-lib} )
 ```
  
+ 
+ (2)添加自定义cpp文件或者c文件
+ 
+ 这里仅给出添加 cpp 文件例子
+ 定义MyMath.cpp文件
+ 
+ 头文件
+ 
+ ```cpp
+ 
+ #ifndef JNITESTCMAKE_MYMATH_CPP_H
+ #define JNITESTCMAKE_MYMATH_CPP_H
+ 
+ int add(int numA,int numB);
+ 
+ #endif //JNITESTCMAKE_MYMATH_CPP_H
+ ```
+ 
+ 源文件
+ 
+ ```cpp
+ 
+ #include "MyMath.h"
+ 
+ int add(int numA,int numB) {
+ 
+ return numA + numB;
+ }
+ 
+ ```
+ 
+ 很简单，就是计算两个数的和,然后需要修改 CMakeLists 文件，将 MyMath.cpp 添加进去（头文件不需要添加）
+ 
+ ```cpp
+ 
+ add_library( # Sets the name of the library.
+ #设置library的名字，也是加载时的库的名字，生成的so是libnative-lib.so
+ native-lib
+ 
+ # Sets the library as a shared library.
+ #设置library是一个共享库
+ SHARED
+ 
+ # Provides a relative path to your source file(s).
+ #指定需要编译的源代码的相对路径
+ ${CPP_DIR}/native-lib.cpp ${CPP_DIR}/MyMath.cpp)
+ 
+ ```
+ 
+ ##### 这里着重讲一下add_library的用法:
+ ```cpp
+ add_library(<name> [STATIC | SHARED | MODULE]
+ [EXCLUDE_FROM_ALL]
+ source1 [source2 ...])
+ ```
+ >* 第一个参数是 so 库的名字，官方指出名称在工程中是唯一的。
+ >* STATIC代表静态类型，即编译后为 .a文件;
+ SHARED 表示动态共享库，即编译后为 .so文件;
+ MODULE 是一个插件，在运行时完成动态加载
+ 
+ >* 第三个参数，是我们要指定的源文件，这里的类型类似于 java 中的可变类型，可以指定多个文件，如又添加 MyMath.cpp，${CPP_DIR}，表示取出我们自定义路径变量中值 src/main/cpp
+ 
+ 完成以上配置后，再设置下布局，添加一个 Button，一个 TextView，cpp 文件中主要完成两个 int 相加工作，通过按钮点击，获取计算结果，并显示在 TextView 中，
+ 下面给出主要代码部分,相信你能够看得懂！
+ 
+ native-lib.cpp文件
+ ```cpp
+ #include <jni.h>
+ #include "MyMath.h"
+ 
+ extern "C"
+ JNIEXPORT jint
+ 
+ JNICALL
+ Java_com_example_ralf_jnitest_1cmake_MainActivity_resultFromJNI(
+ JNIEnv *env,
+ jobject /* this */) {
+ 
+ return add(3,2);
+ }
+ ```
+ 
+ ```java
+ 
+ class MainActivity extends AppCompatActivity{
+ 
+ static {
+ System.loadLibrary("native-lib");
+ }
+ 
+ private native int resultFromJNI();
+ 
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ 
+ final TextView addTextView = findViewById(R.id.add_text);
+ Button button = findViewById(R.id.button);
+ 
+ button.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ addTextView.setText("相加结果为：" + resultFromJNI());
+ }
+ });
+ }
+ 
+ }
+ 
+ ```
+ 
+ ----
+ 好了，通过在 CMakeLists文件，我们就可以添加自定义的一些cpp文件，完成想要的功能。比如，一些重要算法的实现，并不像在java层实现，因为很容易被别人反编译，所以需要编译成so库，这样，就大大提高了APK的安全性能！
+ 
+ 嗯，就到这里，本篇主要初步介绍了一下在 AS 中通过 CMake 方式编译so库，建立 NDK开发的基本环境
+ 
+ [代码地址](https://github.com/RalfNick/JniPractice/tree/master/NDK03)
+ 
+ 
+ 剩下的尾巴：AS 中 so 库放在 jniLibs 中会被打包进 APK 中，但是 jniLibs 的设置会存在问题，先这样设置
+ 
+ ```cpp
+ 
+ sourceSets {
+ main {
+ jniLibs.srcDirs = ['../distribution/libs']
+ jni.srcDirs = [] //disable automatic ndk-build call
+ }
+ }
+ ```
+ 出现下面的问题
+ 
+ （1）More than one file was found with OS independent path 'lib/x86/libusb.so'
+ More than one file was found with OS independent path 'lib/x86/libusb.so'
+ 
+ ##### 有知道的小伙伴，麻烦请指点，万分感激！
 
-(2)添加自定义cpp文件或者c文件
-
-这里仅给出添加 cpp 文件例子
-定义MyMath.cpp文件
-
-头文件
-
-```cpp
-
-#ifndef JNITESTCMAKE_MYMATH_CPP_H
-#define JNITESTCMAKE_MYMATH_CPP_H
-
-int add(int numA,int numB);
-
-#endif //JNITESTCMAKE_MYMATH_CPP_H
-```
-
-源文件
-
-```cpp
-
-#include "MyMath.h"
-
-int add(int numA,int numB) {
-
-    return numA + numB;
-}
-
-```
-
-很简单，就是计算两个数的和,然后需要修改 CMakeLists 文件，将 MyMath.cpp 添加进去（头文件不需要添加）
-
-```cpp
-
-add_library( # Sets the name of the library.
-             #设置library的名字，也是加载时的库的名字，生成的so是libnative-lib.so
-             native-lib
-
-             # Sets the library as a shared library.
-             #设置library是一个共享库
-             SHARED
-
-             # Provides a relative path to your source file(s).
-             #指定需要编译的源代码的相对路径
-             ${CPP_DIR}/native-lib.cpp ${CPP_DIR}/MyMath.cpp)
-
-```
-
-##### 这里着重讲一下add_library的用法:
-```cpp
- add_library(<name> [STATIC | SHARED | MODULE]
-            [EXCLUDE_FROM_ALL]
-            source1 [source2 ...])
-```
->* 第一个参数是 so 库的名字，官方指出名称在工程中是唯一的。
->* STATIC代表静态类型，即编译后为 .a文件;
-SHARED 表示动态共享库，即编译后为 .so文件;
-MODULE 是一个插件，在运行时完成动态加载
-
->* 第三个参数，是我们要指定的源文件，这里的类型类似于 java 中的可变类型，可以指定多个文件，如又添加 MyMath.cpp，${CPP_DIR}，表示取出我们自定义路径变量中值 src/main/cpp
-
-完成以上配置后，再设置下布局，添加一个 Button，一个 TextView，cpp 文件中主要完成两个 int 相加工作，通过按钮点击，获取计算结果，并显示在 TextView 中，
-下面给出主要代码部分,相信你能够看得懂！
-
-native-lib.cpp文件
-```cpp
-#include <jni.h>
-#include "MyMath.h"
-
-extern "C"
-JNIEXPORT jint
-
-JNICALL
-Java_com_example_ralf_jnitest_1cmake_MainActivity_resultFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-
-   return add(3,2);
-}
-```
-
-```java
-
-class MainActivity extends AppCompatActivity{
-
-    static {
-        System.loadLibrary("native-lib");
-    }
-
-    private native int resultFromJNI();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        final TextView addTextView = findViewById(R.id.add_text);
-        Button button = findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTextView.setText("相加结果为：" + resultFromJNI());
-            }
-        });
-    }
-
-}
-
-```
-
-----
-好了，通过在 CMakeLists文件，我们就可以添加自定义的一些cpp文件，完成想要的功能。比如，一些重要算法的实现，并不像在java层实现，因为很容易被别人反编译，所以需要编译成so库，这样，就大大提高了APK的安全性能！
-
-嗯，就到这里，本篇主要初步介绍了一下在 AS 中通过 CMake 方式编译so库，建立 NDK开发的基本环境
-
-[代码地址](https://github.com/RalfNick/JniPractice/tree/master/NDK03)
-
-
-剩下的尾巴：AS 中 so 库放在 jniLibs 中会被打包进 APK 中，但是 jniLibs 的设置会存在问题，先这样设置
-
-```cpp
-
-sourceSets {
-        main {
-            jniLibs.srcDirs = ['../distribution/libs']
-            jni.srcDirs = [] //disable automatic ndk-build call
-        }
-    }
-```
-出现下面的问题
-
-（1）More than one file was found with OS independent path 'lib/x86/libusb.so'
-More than one file was found with OS independent path 'lib/x86/libusb.so'
-
-##### 有知道的小伙伴，麻烦请指点，万分感激！
