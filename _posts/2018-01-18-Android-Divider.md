@@ -125,7 +125,7 @@ tag: Android
 
 效果图布局代码如下，需要的小伙伴可以试试额！
 
-![分割线效果图](http://p0c1ordis.bkt.clouddn.com/%E5%88%86%E5%89%B2%E7%BA%BF%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F-2018-01-18.png)
+![分割线效果图](https://github.com/RalfNick/PicRepository/raw/master/view/%E5%88%86%E5%89%B2%E7%BA%BF%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F-2018-01-18.png)
 
 
 ```java
